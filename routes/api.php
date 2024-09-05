@@ -17,7 +17,7 @@ Route::get('/webhooks', function (Request $request) {
 
     $token = env('WHATSAPP_WEBHOOK_VERIFY_TOKEN');
 
-    if ($token == $tokenEnviado) {
+    if ($tokenEnviado == null || $challenge == null || $token != $tokenEnviado) {
         return response([
             "error" => "Token doens't match."
         ], 400);
