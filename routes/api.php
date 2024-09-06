@@ -25,7 +25,7 @@ Route::get('/webhooks', function (Request $request) {
     return response($challenge, 200)->header('Content-Type', 'text/plain');
 });
 
-Route::post('/webhooks-messages', function (Request $request) {
+Route::post('/webhooks', function (Request $request) {
     $requestData = $request->getContent();
 
     $filename = 'all_requests.txt';
