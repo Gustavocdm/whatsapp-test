@@ -37,20 +37,20 @@ Route::post('/webhooks', function (Request $request) {
     }
 
     
-    $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
-    Http::withHeaders([
-        'Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN'),
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json',
-    ])->post($url, [
-        "messaging_product" => "whatsapp",
-        "recipient_type" => "individual",
-        "to" => '5581999775952',
-        "type" => "text",
-        "text" => [
-            "body" => $requestData
-        ]
-    ]);
+    // $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
+    // Http::withHeaders([
+    //     'Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN'),
+    //     'Accept' => 'application/json',
+    //     'Content-Type' => 'application/json',
+    // ])->post($url, [
+    //     "messaging_product" => "whatsapp",
+    //     "recipient_type" => "individual",
+    //     "to" => '5581999775952',
+    //     "type" => "text",
+    //     "text" => [
+    //         "body" => $requestData
+    //     ]
+    // ]);
 
     return response()->noContent(200);
 });
