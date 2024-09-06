@@ -39,7 +39,7 @@ Route::post('/webhooks', function (Request $request) {
     
     $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
     Http::withHeaders([
-        'Authorization' => 'Bearer ' . $this->token,
+        'Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN'),
         'Accept' => 'application/json',
         'Content-Type' => 'application/json',
     ])->post($url, [
