@@ -27,7 +27,6 @@ Route::get('/webhooks', function (Request $request) {
 
 Route::post('/webhooks', function (Request $request) {
     $requestData = $request->getContent();
-    dump('Salvando arquivo...');
     $filename = 'all_requests.txt';
 
     if (Storage::exists($filename)) {
