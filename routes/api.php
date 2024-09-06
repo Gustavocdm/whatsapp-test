@@ -19,14 +19,10 @@ Route::get('/webhooks', function (Request $request) {
     $token = env('WHATSAPP_WEBHOOK_VERIFY_TOKEN');
 
     if ($tokenEnviado == null || $challenge == null || $token != $tokenEnviado) {
-        return response([
-            "error" => "Token doens't match."
-        ], 400);
+        return response('Invalid verification token', 403);
     }
     
-    return response([
-        "value" => $challenge
-    ]);
+    return response($challenge, 200)->header('Content-Type', 'text/plain');
 });
 
 Route::post('/webhooks-messages', function (Request $request) {
