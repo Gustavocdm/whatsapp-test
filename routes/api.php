@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,6 +35,51 @@ Route::post('/webhooks', function (Request $request) {
     } else {
         Storage::put($filename, $requestData);
     }
+
+    
+    $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
+    Http::withHeaders([
+        'Authorization' => 'Bearer ' . $this->token,
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+    ])->post($url, [
+        "messaging_product" => "whatsapp",
+        "recipient_type" => "individual",
+        "to" => "5581999775952",
+        "type" => "interactive",
+        "interactive" => [
+            "type" => "list",
+            "header" => [
+                "type" => "text",
+                "text" => "Agradecemos o contato"
+            ],
+            "body" => [
+                "text" => "Bom dia, agradecemos o contato. Para seguir com o atendimento selecione um serviço."
+            ],
+            "action" => [
+                "sections" => [
+                    [
+                        "title" => "Serviços",
+                        "rows" => [
+                            [
+                                'id' => 'hello_world',
+                                'title' => 'Hello World!'
+                            ],
+                            [
+                                'id' => 'test',
+                                'title' => 'This is a test!'
+                            ],
+                            [
+                                'id' => 'ok',
+                                'title' => 'Ok?'
+                            ],
+                        ]
+                    ]
+                ],
+                "button" => "Selecionar um serviço",
+            ]
+        ]
+    ]);
 
     return response()->noContent(200);
 });
