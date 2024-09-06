@@ -25,7 +25,7 @@ Route::get('/webhooks', function (Request $request) {
     }
     
     return response([
-        "hub.challenge" => $challenge
+        "value" => $challenge
     ]);
 });
 
