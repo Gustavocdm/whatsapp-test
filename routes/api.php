@@ -76,7 +76,7 @@ Route::post('/webhooks', function (Request $request) {
                         ]
                     ]
                 ],
-                "button" => "Selecionar um serviço",
+                "button" => "Escolha serviço",
             ]
         ]
     ]);
