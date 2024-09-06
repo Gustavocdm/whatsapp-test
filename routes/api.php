@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,4 +27,18 @@ Route::get('/webhooks', function (Request $request) {
     return response([
         "hub.challenge" => $challenge
     ]);
+});
+
+Route::post('/webhooks-messages', function (Request $request) {
+    $requestData = $request->getContent();
+
+    $filename = 'all_requests.txt';
+
+    if (Storage::exists($filename)) {
+        Storage::append($filename, PHP_EOL . $requestData);
+    } else {
+        Storage::put($filename, $requestData);
+    }
+
+    return response()->noContent(200);
 });
