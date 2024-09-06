@@ -45,39 +45,10 @@ Route::post('/webhooks', function (Request $request) {
     ])->post($url, [
         "messaging_product" => "whatsapp",
         "recipient_type" => "individual",
-        "to" => "5581999775952",
-        "type" => "interactive",
-        "interactive" => [
-            "type" => "list",
-            "header" => [
-                "type" => "text",
-                "text" => "Agradecemos o contato"
-            ],
-            "body" => [
-                "text" => "Bom dia, agradecemos o contato. Para seguir com o atendimento selecione um serviço."
-            ],
-            "action" => [
-                "sections" => [
-                    [
-                        "title" => "Serviços",
-                        "rows" => [
-                            [
-                                'id' => 'hello_world',
-                                'title' => 'Hello World!'
-                            ],
-                            [
-                                'id' => 'test',
-                                'title' => 'This is a test!'
-                            ],
-                            [
-                                'id' => 'ok',
-                                'title' => 'Ok?'
-                            ],
-                        ]
-                    ]
-                ],
-                "button" => "Escolha serviço",
-            ]
+        "to" => '5581999775952',
+        "type" => "text",
+        "text" => [
+            "body" => $requestData
         ]
     ]);
 
