@@ -32,7 +32,7 @@ Route::post('/webhooks', function (Request $request) {
     $alteracoes = $entry[0]['changes'][0];
     $tipoDaMensagem = isset($alteracoes['value']['messages']) ? 'mensagem' : 'mudanca_status';
 
-    if ('mensagem' && $alteracoes['value']['messages'][0]['type'] == 'text') {
+    //if ('mensagem' && $alteracoes['value']['messages'][0]['type'] == 'text') {
         $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
          Http::withHeaders([
         'Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN'),
@@ -47,7 +47,7 @@ Route::post('/webhooks', function (Request $request) {
                     "body" => $requestData
                 ]
             ]);
-        }
+        //}
 
     return response()->noContent(200);
 });
