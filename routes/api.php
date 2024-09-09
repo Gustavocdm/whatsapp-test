@@ -28,29 +28,26 @@ Route::get('/webhooks', function (Request $request) {
 
 Route::post('/webhooks', function (Request $request) {
     $requestData = $request->getContent();
-    $filename = 'all_requests.txt';
+    $entry = $request->get('entry');
+    $alteracoes = $entry[0]['changes'][0];
+    $tipoDaMensagem = isset($alteracoes['value']['messages']) ? 'mensagem' : 'mudanca_status';
 
-    if (Storage::exists($filename)) {
-        Storage::append($filename, PHP_EOL . $requestData);
-    } else {
-        Storage::put($filename, $requestData);
-    }
-
-    
-    // $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
-    // Http::withHeaders([
-    //     'Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN'),
-    //     'Accept' => 'application/json',
-    //     'Content-Type' => 'application/json',
-    // ])->post($url, [
-    //     "messaging_product" => "whatsapp",
-    //     "recipient_type" => "individual",
-    //     "to" => '5581999775952',
-    //     "type" => "text",
-    //     "text" => [
-    //         "body" => $requestData
-    //     ]
-    // ]);
+    if ('mensagem' && $alteracoes['value']['messages'][0]['type'] == 'text') {
+        $url = 'https://graph.facebook.com/v20.0/407727505748964/messages';
+         Http::withHeaders([
+        'Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN'),
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+            ])->post($url, [
+                "messaging_product" => "whatsapp",
+                "recipient_type" => "individual",
+                "to" => '5581999775952',
+                "type" => "text",
+                "text" => [
+                    "body" => $requestData
+                ]
+            ]);
+        }
 
     return response()->noContent(200);
 });
